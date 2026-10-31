@@ -77,7 +77,7 @@ function SignupPageInner() {
       : "/dashboard";
     const emailRedirectTo = `${window.location.origin}/auth/callback?next=${encodeURIComponent(next)}`;
 
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -90,6 +90,12 @@ function SignupPageInner() {
 
     if (error) {
       setError(error.message);
+      setLoading(false);
+      return;
+    }
+
+    if (data?.user?.identities?.length === 0) {
+      setError('An account with this email already exists. Please sign in instead.');
       setLoading(false);
       return;
     }
