@@ -108,6 +108,7 @@ function SignupPageInner() {
         fullName,
         email,
         invite: inviteToken,
+        redirectTo: emailRedirectTo,
       }),
     }).catch((err) => {
       console.warn('[signup] Admin notification trigger failed:', err);

@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request: Request) {
   try {
     const body = await request.json().catch(() => ({}));
-    const { fullName, email, invite } = body;
+    const { fullName, email, invite, redirectTo } = body;
 
     if (!email || typeof email !== 'string') {
       return NextResponse.json(
@@ -19,6 +19,7 @@ export async function POST(request: Request) {
       fullName: typeof fullName === 'string' ? fullName : '',
       email,
       invite: typeof invite === 'string' ? invite : null,
+      redirectTo: typeof redirectTo === 'string' ? redirectTo : undefined,
       timestamp: new Date().toISOString(),
     });
 
