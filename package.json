@@ -1,17 +1,17 @@
 {
-  "name": "wacrm",
-  "version": "0.8.0",
+  "name": "digisoft-crm",
+  "version": "1.0.0",
   "private": true,
-  "description": "Self-hostable CRM template for WhatsApp built on Next.js and Supabase — shared inbox, contacts, sales pipelines, broadcasts, and no-code automations.",
+  "description": "Digisoft-CRM: Professional WhatsApp CRM & Customer Management Platform.",
   "license": "MIT",
-  "author": "Arnas Donauskas",
-  "homepage": "https://github.com/ArnasDon/wacrm",
+  "author": "Digisoft",
+  "homepage": "https://github.com/digisoftcomputers-phantom/Digisoft-CRM",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ArnasDon/wacrm.git"
+    "url": "git+https://github.com/digisoftcomputers-phantom/Digisoft-CRM.git"
   },
   "bugs": {
-    "url": "https://github.com/ArnasDon/wacrm/issues"
+    "url": "https://github.com/digisoftcomputers-phantom/Digisoft-CRM/issues"
   },
   "keywords": [
     "crm",
@@ -56,6 +56,7 @@
     "lucide-react": "^1.55.0",
     "next": "16.3.8",
     "next-intl": "^4.14.9",
+    "nodemailer": "^10.3.1",
     "opus-recorder": "^8.0.5",
     "react": "19.2.4",
     "react-dom": "19.2.4",
@@ -68,6 +69,7 @@
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^26",
+    "@types/nodemailer": "^8.0.2",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",

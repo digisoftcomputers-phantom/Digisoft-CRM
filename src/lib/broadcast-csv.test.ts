@@ -83,7 +83,7 @@ describe('parseBroadcastCsv', () => {
       `phone,name
 4155551212,National US
 +14155551212,Ada
-9876543210,National IN`
+4155551213,National US 2`
     );
 
     expect(result).toEqual({

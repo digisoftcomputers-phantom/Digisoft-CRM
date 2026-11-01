@@ -88,4 +88,15 @@ describe('parseContactCsv', () => {
       ],
     });
   });
+it('supports "Mobile No." and auto-normalizes 10-digit Indian numbers with +91', () => {
+    const csv = `A/c Head,Mobile No.,,Regd.with Whatsapp,DND Number,Code
+2025-01-01,9123460566,,Registered With Whatsapp,No,4
+2025-01-01,8917278920,,Registered With Whatsapp,No,4`;
+
+    const result = parseContactCsv(csv);
+    expect(result.hasPhoneColumn).toBe(true);
+    expect(result.rows).toHaveLength(2);
+    expect(result.rows[0].phone).toBe('+919123460566');
+    expect(result.rows[1].phone).toBe('+918917278920');
+  });
 });

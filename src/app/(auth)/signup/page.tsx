@@ -100,6 +100,19 @@ function SignupPageInner() {
       return;
     }
 
+    // Trigger admin notification for the new user registration
+    fetch('/api/admin/notify-signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        fullName,
+        email,
+        invite: inviteToken,
+      }),
+    }).catch((err) => {
+      console.warn('[signup] Admin notification trigger failed:', err);
+    });
+
     setSuccess(true);
     setLoading(false);
   };
@@ -156,6 +169,7 @@ function SignupPageInner() {
               <MessageSquare className="h-6 w-6 text-primary" />
             )}
           </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Digisoft-CRM</p>
           <CardTitle className="text-xl text-foreground">
             {inviteToken ? t("titleJoin") : t("title")}
           </CardTitle>

@@ -49,3 +49,5 @@ supabase/.temp/
 # local setup folders
 GIT-Repository/
 Install Git/
+
+*.zip

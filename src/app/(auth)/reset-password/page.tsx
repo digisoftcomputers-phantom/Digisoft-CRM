@@ -168,6 +168,7 @@ export default function ResetPasswordPage() {
           <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
             <KeyRound className="h-6 w-6 text-primary" />
           </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Digisoft-CRM</p>
           <CardTitle className="text-xl text-foreground">{t("title")}</CardTitle>
           <CardDescription className="text-muted-foreground">
             {t("desc")}

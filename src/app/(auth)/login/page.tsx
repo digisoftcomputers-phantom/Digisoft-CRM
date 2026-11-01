@@ -94,6 +94,7 @@ function LoginPageInner() {
               <MessageSquare className="h-6 w-6 text-primary" />
             )}
           </div>
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Digisoft-CRM</p>
           <CardTitle className="text-xl text-foreground">
             {inviteToken ? t('titleAccept') : t('titleWelcome')}
           </CardTitle>

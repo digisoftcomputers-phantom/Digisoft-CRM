@@ -61,7 +61,21 @@ export function parseContactCsv(text: string): ParseContactCsvResult {
     .split(',')
     .map((h) => h.trim().toLowerCase().replace(/["']/g, ''));
 
-  const phoneIdx = headers.indexOf('phone');
+  const phoneAliases = [
+    'phone',
+    'mobile',
+    'mobile no.',
+    'mobile no',
+    'mobile number',
+    'phone number',
+    'phonenumber',
+    'contact',
+    'contact no',
+    'contact number',
+    'cell',
+    'whatsapp',
+  ];
+  const phoneIdx = headers.findIndex((h) => phoneAliases.includes(h));
   if (phoneIdx === -1) {
     return {
       rows: [],
@@ -71,10 +85,24 @@ export function parseContactCsv(text: string): ParseContactCsvResult {
     };
   }
 
-  const nameIdx = headers.indexOf('name');
-  const emailIdx = headers.indexOf('email');
-  const companyIdx = headers.indexOf('company');
-  const tagsIdx = headers.indexOf('tags');
+  const nameAliases = [
+    'name',
+    'full name',
+    'fullname',
+    'contact name',
+    'customer name',
+    'client name',
+  ];
+  const nameIdx = headers.findIndex((h) => nameAliases.includes(h));
+
+  const emailAliases = ['email', 'e-mail', 'email address'];
+  const emailIdx = headers.findIndex((h) => emailAliases.includes(h));
+
+  const companyAliases = ['company', 'organization', 'org', 'business'];
+  const companyIdx = headers.findIndex((h) => companyAliases.includes(h));
+
+  const tagsAliases = ['tags', 'tag'];
+  const tagsIdx = headers.findIndex((h) => tagsAliases.includes(h));
 
   const rows: ParsedContactRow[] = [];
 
@@ -83,13 +111,16 @@ export function parseContactCsv(text: string): ParseContactCsvResult {
     if (!line) continue;
 
     const values = parseCsvLine(line);
-    // A row with no usable phone is pushed through rather than dropped
-    // here — dedupeByPhone (shared with the webhook/manual-form paths)
-    // already treats an empty normalized key as invalid, and counting
-    // it there means the import result can tell the user "N contacts
-    // had no phone" instead of the row just vanishing with the total
-    // row count silently short of what's actually in the file.
-    const phone = values[phoneIdx]?.replace(/["']/g, '').trim() ?? '';
+    let phone = values[phoneIdx]?.replace(/["']/g, '').trim() ?? '';
+    // Auto-normalize national formats: if missing '+' and is a 10-digit number (common in India), prefix '+91'
+    if (phone && !phone.startsWith('+')) {
+      const digits = phone.replace(/\D/g, '');
+      if (digits.length === 10 && /^[6-9]/.test(digits)) {
+        phone = `+91${digits}`;
+      } else if (digits.length === 12 && digits.startsWith('91')) {
+        phone = `+${digits}`;
+      }
+    }
 
     rows.push({
       phone,
